@@ -29,6 +29,11 @@ cargo run "1+2"
 cargo run "(4 - 1) * 5"
 ```
 
+### 🛠 Dev Test
+```bash
+cargo test
+```
+
 ## Further Development
 - [ ] Expression validity checks (e.g., unbalanced parentheses, invalid tokens).
 - [ ] Support for multi-digit numbers (currently parses only single-digit).
