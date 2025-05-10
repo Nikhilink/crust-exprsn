@@ -1,7 +1,5 @@
 pub mod expression_tree
 {
-
-    
     fn precedence(operator: &char) -> i32
     {
         match operator {
@@ -28,11 +26,10 @@ pub mod expression_tree
                 a / b
             }
             _ => {
-                a % b
+                0
             }
         }
     }
-
 
     pub fn parse_and_evaluate(expression: &String) -> Result<u32, String>
     {
@@ -40,6 +37,7 @@ pub mod expression_tree
         let mut operator_stack: Vec<char> = vec![];
         println!("provided argument {}", *expression);
 
+        let mut braces: u32 = 0;
         for ex in expression.chars()
         {
             match ex {
@@ -53,19 +51,28 @@ pub mod expression_tree
                     });
                 },
                 ex if ex == '(' => {
+                    braces += 1;
                     operator_stack.push(ex);
                 }
                 ex if ex == ')' => {
-                    while operator_stack[operator_stack.len() - 1] != '('
+                    if braces > 0
                     {
-                        let b = match operand_stack.pop() { Some(x) => x, None => 0 };
-                        let a = match operand_stack.pop() { Some(x) => x, None => 0 };
+                        while operator_stack[operator_stack.len() - 1] != '('
+                        {
+                            let b = match operand_stack.pop() { Some(x) => x, None => 0 };
+                            let a = match operand_stack.pop() { Some(x) => x, None => 0 };
 
-                        let operator = match operator_stack.pop() { Some(x) => x, None => {return Err(String::from("Not a operator defaulting to +."));}};
+                            let operator = match operator_stack.pop() { Some(x) => x, None => {return Err(String::from("Not a operator defaulting to +."));}};
 
-                        operand_stack.push(operation(&a, &b, &operator));
+                            operand_stack.push(operation(&a, &b, &operator));
+                        }
+                        operator_stack.pop();
+                        braces -= 1;
                     }
-                    operator_stack.pop();
+                    else 
+                    {
+                        return Err(String::from("Expression not balanced")); 
+                    }
                 }
                 _ => 
                 {
@@ -83,17 +90,30 @@ pub mod expression_tree
                 } 
             }
         }
-        while !operator_stack.is_empty()
+        if braces == 0
         {
-            let b = match operand_stack.pop() { Some(x) => x, None => 0 };
-            let a = match operand_stack.pop() { Some(x) => x, None => 0 };
+            while !operator_stack.is_empty()
+            {
+                let b = match operand_stack.pop() { Some(x) => x, None => 0 };
+                let a = match operand_stack.pop() { Some(x) => x, None => 0 };
 
-            let operator = match operator_stack.pop() { Some(x) => x, None => {return Err(String::from("Not a operator defaulting to +."));}};
+                let operator = match operator_stack.pop() { Some(x) => x, None => {return Err(String::from("Not a operator defaulting to +."));}};
 
-            operand_stack.push(operation(&a, &b, &operator));
+                operand_stack.push(operation(&a, &b, &operator));
+            }
+
+            match operator_stack.len()
+            {
+                stack_len if stack_len == 0 => Ok(operand_stack[0]),
+                _ => Err(String::from("Expression not balanced"))
+            }
         }
+        else
+        {
+            return Err(String::from("Expression not balanced"));
+        }
+        
 
         // println!("Result: {}", operand_stack[0]);
-        Ok(operand_stack[0])
     }
 }

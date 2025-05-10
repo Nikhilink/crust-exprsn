@@ -50,4 +50,22 @@ mod tests
 
         assert_eq!(result, 15);
     }
+
+    #[test]
+    fn eval_4()
+    {
+        let expression = String::from("(1 + 9 + 5) / 3");
+        let result: Result<u32, String> = expression_tree::parse_and_evaluate(&expression);
+
+        assert_eq!(result, Ok(5));
+    }
+
+    #[test]
+    fn unbalanced_expr()
+    {
+        let expression = String::from("((1 + 9)");
+        let result: Result<u32, String> = expression_tree::parse_and_evaluate(&expression);
+
+        assert_eq!(result, Err(String::from("Expression not balanced")));
+    }
 }
