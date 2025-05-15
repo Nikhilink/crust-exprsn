@@ -36,5 +36,5 @@ cargo test
 
 ## Further Development
 - [x] Expression validity checks (e.g., unbalanced parentheses, invalid tokens).
-- [ ] Support for multi-digit numbers (currently parses only single-digit).
-- [ ] Support for negative integers.
+- [x] Support for multi-digit numbers (currently parses only single-digit).
+- [x] Support for floating point numbers.
