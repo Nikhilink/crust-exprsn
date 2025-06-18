@@ -10,19 +10,15 @@ pub mod expression_tree {
     fn operation(a: &f32, b: &f32, operator: &char) -> f32 {
         match operator {
             op if *op == '+' => {
-                eprintln!("{}", a + b);
                 a + b
             }
             op if *op == '-' => {
-                eprintln!("{}", a - b);
                 a - b
             }
             op if *op == '*' => {
-                eprintln!("{}", a * b);
                 a * b
             }
             op if *op == '/' && *b != 0.0 => {
-                eprintln!("{}", a / b);
                 a / b
             }
             _ => {
@@ -35,14 +31,12 @@ pub mod expression_tree {
     pub fn parse_and_evaluate(expression: &String) -> Result<f32, String> {
         let mut operand_stack: Vec<f32> = vec![];
         let mut operator_stack: Vec<char> = vec![];
-        println!("provided argument {}", *expression);
 
         let mut braces: u32 = 0;
 
         let mut idx = 0;
 
         let expression_vec: Vec<char> = expression.chars().collect();
-        println!("{:?}", expression_vec);
 
         let mut current_num = String::new();
 
@@ -165,6 +159,5 @@ pub mod expression_tree {
             return Err(String::from("Expression not balanced"));
         }
 
-        // println!("Result: {}", operand_stack[0]);
     }
 }

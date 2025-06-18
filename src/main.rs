@@ -15,7 +15,7 @@ fn main() {
     {
         let expression = &args[1];
         let value = expression_tree::parse_and_evaluate(expression).expect("Error occured while evaluating expression");
-        println!("Result: {}", value);
+        println!("{}", value);
     }
 }
 
