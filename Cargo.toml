@@ -3,4 +3,26 @@ name = "exp"
 version = "0.1.0"
 edition = "2024"
 
+
+[profile.dev]
+opt-level = 0            # Fastest compile, least optimized
+debug = true
+overflow-checks = true
+lto = false
+incremental = true
+
+[profile.dev.package."*"]
+opt-level = 3
+
+# Production profile
+[profile.release]
+opt-level = 3
+debug = false
+overflow-checks = false
+lto = true
+codegen-units = 1        # Better optimization
+panic = "abort"          # Smaller binary
+strip = true             # Remove debug symbols
+
+
 [dependencies]
