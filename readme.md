@@ -38,3 +38,6 @@ cargo test
 - [x] Expression validity checks (e.g., unbalanced parentheses, invalid tokens).
 - [x] Support for multi-digit numbers (currently parses only single-digit).
 - [x] Support for floating point numbers.
+- [ ] New Expression Language implementation
+- [ ] Support for variables
+- [ ] Support for strictly numerical vector datatypes
