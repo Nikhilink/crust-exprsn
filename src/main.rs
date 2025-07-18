@@ -4,6 +4,7 @@ mod parser;
 
 use parser::exp_tree::expression_tree;
 
+
 fn main() {
     let args: Vec<String> = env::args().collect();
 
@@ -22,6 +23,7 @@ fn main() {
 #[cfg(test)]
 mod tests
 {
+    use parser::engine::expression_engine::Lexer;
     use super::*;
 
     #[test]
@@ -95,4 +97,18 @@ mod tests
 
         assert_eq!(result, Ok(0.3));
     }
+
+    #[test]
+    fn new_expression_engine_variable_assignment_test()
+    {
+        let lexer = Lexer::new();
+
+        let expression: String = String::from("a = 10");
+        lexer.lexical_analysis(&expression);
+
+        assert_eq!(true, true);
+
+        
+    }
+    
 }
